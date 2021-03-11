@@ -29,14 +29,15 @@ impl App {
 
         //let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
 
+        let shp = &mut self.shape;
         self.gl.draw(args.viewport(), |c, gl| {
             let transform = c.transform
                              .scale(15., 15.);
             clear(GREEN, gl);
             for i in 0..4 {
                 for j in 0..4 {
-                    if self.shape.shape[i][j] == 1 {
-                        transform.trans(15., 15.);
+                    if shp.shape[i][j] == 1 {
+                        transform.trans(15.*j as f64, 15.*i as f64);
                         rectangle(RED, square, transform, gl);
                     }
                 }
