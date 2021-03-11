@@ -24,20 +24,21 @@ impl App {
 
         const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
         const RED: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
+        const SCALE: f64 = 3.5;
         
-        let square = graphics::rectangle::square(5., 5., 25.);
-
+        let square = graphics::rectangle::square(0., 0., SCALE);
         //let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
 
         let shp = &mut self.shape;
         self.gl.draw(args.viewport(), |c, gl| {
             let transform = c.transform
-                             .scale(15., 15.);
+                             .scale(SCALE, SCALE);
             clear(GREEN, gl);
             for i in 0..4 {
-                for j in 0..4 {
+                for j in 0..4 { 
+                    transform.trans(100., 100.);
                     if shp.shape[i][j] == 1 {
-                        transform.trans(15.*j as f64, 15.*i as f64);
+                       // transform.trans(SCALE*j as f64, SCALE*i as f64);
                         rectangle(RED, square, transform, gl);
                     }
                 }
@@ -46,8 +47,7 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {  
-        self.shape = random_tetrimino();
-        self.shape.rotate(RotationDirection::Clockwise);
+        //self.shape = random_tetrimino();
     }
 }
 
@@ -65,7 +65,7 @@ fn main() {
     // Create a new game and run it.
     let mut app = App {
         gl: GlGraphics::new(opengl),
-        shape: random_tetrimino()
+        shape: det_tetrimino(Tetrimino::T),
     };
 
     let mut events = Events::new(EventSettings::new());

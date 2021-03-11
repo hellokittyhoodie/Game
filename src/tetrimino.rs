@@ -2,7 +2,7 @@ use rand::distributions::{Distribution, Standard};
 use rand::Rng;
 
 #[derive(Debug)]
-enum Tetrimino {
+pub enum Tetrimino {
     T, J, L, I, O, Z, S
 }
 
@@ -89,4 +89,8 @@ fn get_shape(kind: Tetrimino) -> tetrimino {
 
 pub fn random_tetrimino() -> tetrimino {
     get_shape(rand::random())
+}
+
+pub fn det_tetrimino(kind: Tetrimino) -> tetrimino {
+    get_shape(kind)
 }
